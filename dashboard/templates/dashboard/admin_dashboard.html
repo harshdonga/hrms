@@ -1,0 +1,86 @@
+{% extends 'dashboard/home.html' %}
+{% load static %}
+
+{% block head %}
+        <!-- CSS -->
+        <link rel="stylesheet" href="{% static 'dashboard/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'dashboard/css/font-awesome.min.css' %}">
+        <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+        <!-- /CSS -->
+{% endblock %}
+
+
+{% block body %}
+
+<div class="page-wrapper" style="min-height: 872px;">
+
+        <div class="content container-fluid">
+
+                <!-- Insight -->
+                <div class="page-header">
+                                    <div class="row">
+                                            <div class="col-sm-12">
+                                                    <h3 class="page-title">Welcome Admin!</h3>
+                                                    <ul class="breadcrumb">
+                                                            <li class="breadcrumb-item active">Dashboard - {{ ipaddr }}</li>
+                                                    </ul>
+                                            </div>
+                                    </div>
+                </div>
+                <!-- /Insights -->
+                
+                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                                            <div class="card dash-widget">
+                                                    <div class="card-body">
+                                                            <span class="dash-widget-icon"><i
+                                                                            class="fa fa-cubes"></i></span>
+                                                            <div class="dash-widget-info">
+                                                                    <h3>X</h3>
+                                                                    <span>Projects</span>
+                                                            </div>
+                                                    </div>
+                                            </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                                            <div class="card dash-widget">
+                                                    <div class="card-body">
+                                                            <span class="dash-widget-icon"><i
+                                                                            class="fa fa-usd"></i></span>
+                                                            <div class="dash-widget-info">
+                                                                    <h3>Y</h3>
+                                                                    <span>Clients</span>
+                                                            </div>
+                                                    </div>
+                                            </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                                            <div class="card dash-widget">
+                                                    <div class="card-body">
+                                                            <span class="dash-widget-icon"><i
+                                                                            class="fa fa-diamond"></i></span>
+                                                            <div class="dash-widget-info">
+                                                                    <h3>Z</h3>
+                                                                    <span>Tasks</span>
+                                                            </div>
+                                                    </div>
+                                            </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                                            <div class="card dash-widget">
+                                                    <div class="card-body">
+                                                            <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
+                                                            <div class="dash-widget-info">
+                                                                    <h3>W</h3>
+                                                                    <span>Employees</span>
+                                                            </div>
+                                                    </div>
+                                            </div>
+                                    </div>
+                 </div>
+        </div>
+</div>
+
+
+{% endblock %}
