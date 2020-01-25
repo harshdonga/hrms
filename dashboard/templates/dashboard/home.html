@@ -75,8 +75,7 @@
                                             <a href="activities.html">
                                                 <div class="media">
                                                     <span class="avatar">
-                                                        <img alt=""
-                                                            src="./Dashboard - HRMS admin template_files/avatar-02.jpg">
+                                                        <img alt="">
                                                     </span>
                                                     <div class="media-body">
                                                         <p class="noti-details"><span class="noti-title">John Doe</span>
@@ -93,8 +92,7 @@
                                             <a href="activities.html">
                                                 <div class="media">
                                                     <span class="avatar">
-                                                        <img alt=""
-                                                            src="./Dashboard - HRMS admin template_files/avatar-03.jpg">
+                                                        <img alt="">
                                                     </span>
                                                     <div class="media-body">
                                                         <p class="noti-details"><span class="noti-title">Tarah
@@ -112,8 +110,7 @@
                                             <a href="activities.html">
                                                 <div class="media">
                                                     <span class="avatar">
-                                                        <img alt=""
-                                                            src="./Dashboard - HRMS admin template_files/avatar-06.jpg">
+                                                        <img alt="">
                                                     </span>
                                                     <div class="media-body">
                                                         <p class="noti-details"><span class="noti-title">Misty Tison</span>
@@ -131,8 +128,7 @@
                                             <a href="activities.html">
                                                 <div class="media">
                                                     <span class="avatar">
-                                                        <img alt=""
-                                                            src="./Dashboard - HRMS admin template_files/avatar-17.jpg">
+                                                        <img alt="">
                                                     </span>
                                                     <div class="media-body">
                                                         <p class="noti-details"><span class="noti-title">Rolland
@@ -149,8 +145,7 @@
                                             <a href="activities.html">
                                                 <div class="media">
                                                     <span class="avatar">
-                                                        <img alt=""
-                                                            src="./Dashboard - HRMS admin template_files/avatar-13.jpg">
+                                                        <img alt="">
                                                     </span>
                                                     <div class="media-body">
                                                         <p class="noti-details"><span class="noti-title">Bernardo
@@ -189,8 +184,7 @@
                                                 <div class="list-item">
                                                     <div class="list-left">
                                                         <span class="avatar">
-                                                            <img alt=""
-                                                                src="./Dashboard - HRMS admin template_files/avatar-09.jpg">
+                                                            <img alt="">
                                                         </span>
                                                     </div>
                                                     <div class="list-body">
@@ -209,8 +203,7 @@
                                                 <div class="list-item">
                                                     <div class="list-left">
                                                         <span class="avatar">
-                                                            <img alt=""
-                                                                src="./Dashboard - HRMS admin template_files/avatar-02.jpg">
+                                                            <img alt="">
                                                         </span>
                                                     </div>
                                                     <div class="list-body">
@@ -229,8 +222,7 @@
                                                 <div class="list-item">
                                                     <div class="list-left">
                                                         <span class="avatar">
-                                                            <img alt=""
-                                                                src="./Dashboard - HRMS admin template_files/avatar-03.jpg">
+                                                            <img alt="">
                                                         </span>
                                                     </div>
                                                     <div class="list-body">
@@ -249,8 +241,7 @@
                                                 <div class="list-item">
                                                     <div class="list-left">
                                                         <span class="avatar">
-                                                            <img alt=""
-                                                                src="./Dashboard - HRMS admin template_files/avatar-05.jpg">
+                                                            <img alt="">
                                                         </span>
                                                     </div>
                                                     <div class="list-body">
@@ -269,8 +260,7 @@
                                                 <div class="list-item">
                                                     <div class="list-left">
                                                         <span class="avatar">
-                                                            <img alt=""
-                                                                src="./Dashboard - HRMS admin template_files/avatar-08.jpg">
+                                                            <img alt="">
                                                         </span>
                                                     </div>
                                                     <div class="list-body">
@@ -295,7 +285,7 @@
 
                         <li class="nav-item dropdown has-arrow main-drop">
                             <a href="index.html#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                                <span class="user-img"><img src="./Dashboard - HRMS admin template_files/avatar-21.jpg"
+                                <span class="user-img"><img
                                         alt="">
                                     <span class="status online"></span></span>
                                 <span>Admin</span>
@@ -337,8 +327,7 @@
                                         <a href="index.html#" class="active subdrop"><i class="fa fa-dashboard"></i> <span>
                                                 Dashboard</span> <span class="menu-arrow"></span></a>
                                         <ul style="display: block;">
-                                            <li><a class="active" href="{% url 'admin_dashboard' %}">Admin Dashboard</a></li>
-                                            <li><a href="{% url 'employee_dashboard' %}">Employee Dashboard</a></li>
+                                            <li><a class="active" href="{% url 'dashboard' %}">Dashboard</a></li>
                                         </ul>
                                     </li>
                                     <li class="submenu">
@@ -607,14 +596,17 @@
 
 
         </div>
-
+        <script type="text/javascript">
+            window.CSRF_TOKEN = "{{ csrf_token }}";
+        </script>
         <!-- JS -->
         <script src="{% static 'dashboard/js/jquery-3.2.1.min.js' %}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
         <script src="{% static 'dashboard/js/jquery.slimscroll.min.js' %}"></script>
         <script src="{% static 'dashboard/js/bootstrap.min.js' %}"></script>
         <script src="{% static 'dashboard/js/custom.js' %}"></script>
+        <script src="{% static 'dashboard/js/timesheet.js' %}"></script>
         <!-- /JS -->
-
     </body>
 
 </html>

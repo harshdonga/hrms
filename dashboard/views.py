@@ -1,18 +1,46 @@
-from django.shortcuts import render
+import json
+from datetime import datetime, timedelta
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 from ipaddr import client_ip
+from .models import Timesheet
+
+def res(request):
+    rn = datetime.now()
+    obj = Timesheet(emp_id = 1, start_time = rn)
+    obj.save()
+    print(obj.timesheet_id)
+    request.session['timesheet_id'] = obj.timesheet_id
+    data = {}
+    data['result'] = 'Request made for time in'
+    return HttpResponse(json.dumps(data), content_type="application/json")
+
+def res2(request):
+    rn = datetime.now()
+    obj = Timesheet.objects.get(timesheet_id = request.session['timesheet_id'])
+    obj.end_time = rn
+    obj.save()
+    data = {}
+    data['result'] = 'Request made for time out'
+    return HttpResponse(json.dumps(data), content_type="application/json")    
 
 
 def xxx(request):
     ipaddr = client_ip(request)
     return ipaddr
 
-def admin_dashboard(request):
-    ipaddr = xxx(request)
-    return render(request, 'dashboard/admin_dashboard.html', {'ipaddr':ipaddr})
+def login(request):
+    print('-'*20)
+    print(dir(request.session))
+    return redirect('/dashboard')
 
-def employee_dashboard(request):
-    return render(request, 'dashboard/page_under_development.html')
+
+@login_required(login_url = '/login')
+def dashboard(request):
+    ipaddr = xxx(request)
+    return render(request, 'dashboard/dashboard.html', {'ipaddr':ipaddr})
 
 def chat(request):
     return render(request, 'dashboard/page_under_development.html')
