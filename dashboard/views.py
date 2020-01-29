@@ -66,6 +66,7 @@ def login(request):
         print('Sorry, no user')
         return redirect('home')
 
+
 def dashboard(request):
     if request.session.has_key('emp_id') and request.session.has_key('username'):
         ipaddr = xxx(request)
@@ -75,21 +76,20 @@ def dashboard(request):
         return redirect('home')
 
 
-def chat(request):
-    return render(request, 'dashboard/page_under_development.html')
-
-def events(request):
-    return render(request, 'dashboard/page_under_development.html')
-
-
 def upload_file(request):
+    file_objects = {}
     if request.method == 'POST':
         uploaded_file = request.FILES['doc']
         fs = FileSystemStorage()
         filename = fs.save(uploaded_file.name, uploaded_file)
-        json_string = '{'+'\nfile_name : '+ uploaded_file + ',\nfile_url'+ fs.url(filename) +'\n}'
-        employee = get_employee()
-        files = employee.files
+        employee = get_employee(request)
+        file_objects = employee.files
+        if file_objects:
+            pass
+        else:       
+            file_objects['objects'].append({'file_name':str(uploaded_file), 'file_url': str(fs.url(filename))})
+            employee.files = file_objects
+            employee.save()
         return redirect('file_manager')
 
 
@@ -106,6 +106,23 @@ def file_manager(request):
         return render(request, 'dashboard/files.html', {'files':files})
     else:
         return redirect('home')
+
+
+
+
+
+
+
+
+
+
+
+
+def chat(request):
+    return render(request, 'dashboard/page_under_development.html')
+
+def events(request):
+    return render(request, 'dashboard/page_under_development.html')
 
 def employees(request):
     return render(request, 'dashboard/page_under_development.html')
