@@ -10,6 +10,7 @@ class EmployeePersonal(models.Model):
     emergency = JSONField()
     education = JSONField()
     links = JSONField()
+    emp_email = models.CharField(max_length=75, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -26,6 +27,8 @@ class EmployeeProfessional(models.Model):
     child = JSONField()
     activity = JSONField()
     position = models.CharField(max_length=50, blank=True, null=True)
+    emp_email = models.CharField(max_length=75, blank=True, null=True)
+    files = JSONField()
 
     class Meta:
         managed = False

@@ -3,13 +3,24 @@ from datetime import datetime, timedelta
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
+from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.decorators import login_required
 from ipaddr import client_ip
-from .models import Timesheet
+from .models import Timesheet, EmployeePersonal, EmployeeProfessional, Login
+
+def get_employee(request):
+    emp_id = request.session['emp_id']
+    employee = EmployeeProfessional.objects.get(emp_id = emp_id)
+    return employee
+
+def xxx(request):
+    ipaddr = client_ip(request)
+    return ipaddr
 
 def res(request):
     rn = datetime.now()
-    obj = Timesheet(emp_id = 1, start_time = rn)
+    emp_id = request.session['emp_id']
+    obj = Timesheet(emp_id = emp_id, start_time = rn)
     obj.save()
     print(obj.timesheet_id)
     request.session['timesheet_id'] = obj.timesheet_id
@@ -27,20 +38,42 @@ def res2(request):
     return HttpResponse(json.dumps(data), content_type="application/json")    
 
 
-def xxx(request):
-    ipaddr = client_ip(request)
-    return ipaddr
+def home(request):
+    if request.session.has_key('emp_id') and request.session.has_key('username'):
+       return redirect('dashboard')
+    else:     
+        return render(request, 'dashboard/login.html')
+
 
 def login(request):
-    print('-'*20)
-    print(dir(request.session))
-    return redirect('/dashboard')
+    session = request.session
+    emp_email = request.POST['email']
+    emp_pass = request.POST['password']
+    try:
+        employee = EmployeeProfessional.objects.get(emp_email= emp_email)
+        print('user exists')
+        if employee.emp_pass == emp_pass:
+            print('Password Matched!')
+            name = employee.name['first'] + " " + employee.name['last']
+            session['emp_id'] = employee.emp_id
+            session['username'] = name 
+            return redirect('dashboard')
+            
+        else:
+            print('Sorry, Wrong Password')
+            return redirect('home')
+    except:
+        print('Sorry, no user')
+        return redirect('home')
 
-
-@login_required(login_url = '/login')
 def dashboard(request):
-    ipaddr = xxx(request)
-    return render(request, 'dashboard/dashboard.html', {'ipaddr':ipaddr})
+    if request.session.has_key('emp_id') and request.session.has_key('username'):
+        ipaddr = xxx(request)
+        request.session['ip'] = ipaddr
+        return render(request, 'dashboard/dashboard.html', {'ipaddr':ipaddr})
+    else:
+        return redirect('home')
+
 
 def chat(request):
     return render(request, 'dashboard/page_under_development.html')
@@ -48,8 +81,31 @@ def chat(request):
 def events(request):
     return render(request, 'dashboard/page_under_development.html')
 
+
+def upload_file(request):
+    if request.method == 'POST':
+        uploaded_file = request.FILES['doc']
+        fs = FileSystemStorage()
+        filename = fs.save(uploaded_file.name, uploaded_file)
+        json_string = '{'+'\nfile_name : '+ uploaded_file + ',\nfile_url'+ fs.url(filename) +'\n}'
+        employee = get_employee()
+        files = employee.files
+        return redirect('file_manager')
+
+
 def file_manager(request):
-    return render(request, 'dashboard/page_under_development.html')
+    if request.session.has_key('emp_id') and request.session.has_key('username'):
+        employee = get_employee(request)
+        file_objects = employee.files
+        if file_objects:
+            files = file_objects['objects']
+        else:
+            files = {}
+        # files['objects'].append({'file_name':'f3', 'file_url': 'f3_url'})
+        print(files)
+        return render(request, 'dashboard/files.html', {'files':files})
+    else:
+        return redirect('home')
 
 def employees(request):
     return render(request, 'dashboard/page_under_development.html')

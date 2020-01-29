@@ -79,6 +79,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE =  'Asia/Kolkata'
@@ -90,3 +92,7 @@ USE_L10N = True
 USE_TZ = False
 
 STATIC_URL = '/static/'
+
+
+MEDIA_URL = '/file-system/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'file-system')

@@ -1,0 +1,19 @@
+<html>
+    <body>
+        <h2>FILE MANAGER</h2>
+        <form action="{% url 'upload_file' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label> Upload file not over 100mb: 
+            <input type="file" name="doc" id="doc"><br><br>
+            </label>
+            <input type="submit" value="Post file"><br><br>
+
+            <h2>Your files</h2>
+            {% if files %}
+                {% for f in files %}
+                    <a href="{{f.file_url}}">{{f.file_url}}</a><br>
+                {% endfor %}
+            {% endif %}
+        </form>
+    </body>
+</html>
