@@ -7,6 +7,7 @@ from django.conf import settings
 urlpatterns = [
     path('',views.home, name = 'home'),
     path('login',views.login, name = 'login'),
+    path('logout',views.logout, name = 'logout'),
     path('dashboard',views.dashboard, name = 'dashboard'),
     path('chat',views.chat, name = 'chat'),
     path('events',views.events, name = 'events'),
@@ -41,7 +42,6 @@ urlpatterns = [
     path('trainers',views.trainers, name = 'trainers'),
     path('promotion',views.promotion, name = 'promotion'),
     path('resignation',views.resignation, name = 'resignation'),
-    path('termination',views.termination, name = 'termination'),
     path('assets',views.assets, name = 'assets'),
     path('jobs',views.jobs, name = 'jobs'),
     path('applicants',views.applicants, name = 'applicants'),

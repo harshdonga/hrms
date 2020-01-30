@@ -67,11 +67,19 @@ def login(request):
         return redirect('home')
 
 
+def logout(request):
+    session = request.session
+    del session['emp_id']
+    del session['username']
+    return redirect('home')
+
+
 def dashboard(request):
     if request.session.has_key('emp_id') and request.session.has_key('username'):
         ipaddr = xxx(request)
         request.session['ip'] = ipaddr
-        return render(request, 'dashboard/dashboard.html', {'ipaddr':ipaddr})
+        username = request.session['username']
+        return render(request, 'dashboard/dashboard.html', {'ipaddr':ipaddr, 'username':username})
     else:
         return redirect('home')
 
@@ -85,8 +93,12 @@ def upload_file(request):
         employee = get_employee(request)
         file_objects = employee.files
         if file_objects:
-            pass
-        else:       
+            file_objects['objects'].append({'file_name':str(uploaded_file), 'file_url': str(fs.url(filename))})
+            employee.files = file_objects
+            employee.save()
+        else:
+            file_objects = {}
+            file_objects['objects'] = []  
             file_objects['objects'].append({'file_name':str(uploaded_file), 'file_url': str(fs.url(filename))})
             employee.files = file_objects
             employee.save()
@@ -101,8 +113,6 @@ def file_manager(request):
             files = file_objects['objects']
         else:
             files = {}
-        # files['objects'].append({'file_name':'f3', 'file_url': 'f3_url'})
-        print(files)
         return render(request, 'dashboard/files.html', {'files':files})
     else:
         return redirect('home')
@@ -209,9 +219,6 @@ def promotion(request):
     return render(request, 'dashboard/page_under_development.html')
 
 def resignation(request):
-    return render(request, 'dashboard/page_under_development.html')
-
-def termination(request):
     return render(request, 'dashboard/page_under_development.html')
 
 def assets(request):

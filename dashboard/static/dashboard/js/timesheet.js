@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     $('#ajax_time_in').click(function() {
         console.log('time_in clicked');
 
@@ -28,7 +29,6 @@ $(document).ready(function () {
                 console.log(data.result);
             }
         })
-    });    
-
+    });   
 
 });

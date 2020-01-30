@@ -12,16 +12,35 @@
 
 
 {% block body %}
+<style>
+        .button {
+        background-color: #56B6BC;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+        }
+        .button:hover {
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+        }
+</style>
 
 <div class="page-wrapper" style="min-height: 872px;">
 
         <div class="content container-fluid">
 
-                <!-- Insight -->
+                <!-- Insights -->
                 <div class="page-header">
                                     <div class="row">
                                             <div class="col-sm-12">
-                                                    <h3 class="page-title">Welcome Admin!</h3>
+                                                    <h3 class="page-title">Welcome {{ username }}!</h3>
                                                     <ul class="breadcrumb">
                                                             <li class="breadcrumb-item active">Dashboard - {{ ipaddr }}</li>
                                                     </ul>
@@ -31,59 +50,21 @@
                 <!-- /Insights -->
                 
                 <div class="row">
-                                    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                                    <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12">
                                             <div class="card dash-widget">
                                                     <div class="card-body">
-                                                            <span class="dash-widget-icon"><i
-                                                                            class="fa fa-cubes"></i></span>
                                                             <div class="dash-widget-info">
-                                                                    <button id="ajax_time_in">
-                                                                            <h3>X</h3>
+                                                                    <button class="button" id="ajax_time_in">
+                                                                            <h3>Check In</h3>
                                                                     </button>
-                                                                    <span>Projects</span>
-                                                            </div>
-                                                    </div>
-                                            </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-                                            <div class="card dash-widget">
-                                                    <div class="card-body">
-                                                            <span class="dash-widget-icon"><i
-                                                                            class="fa fa-usd"></i></span>
-                                                            <div class="dash-widget-info">
-                                                                    <button id="ajax_time_out">
-                                                                            <h3>Y</h3>
+                                                                   <button class="button" id="ajax_time_out">
+                                                                            <h3>Check Out</h3>
                                                                     </button>
-                                                                    <span>Clients</span>
-                                                            </div>
-                                                    </div>
-                                            </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-                                            <div class="card dash-widget">
-                                                    <div class="card-body">
-                                                            <span class="dash-widget-icon"><i
-                                                                            class="fa fa-diamond"></i></span>
-                                                            <div class="dash-widget-info">
-                                                                    <h3>Z</h3>
-                                                                    <span>Tasks</span>
-                                                            </div>
-                                                    </div>
-                                            </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-                                            <div class="card dash-widget">
-                                                    <div class="card-body">
-                                                            <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
-                                                            <div class="dash-widget-info">
-                                                                    <h3>W</h3>
-                                                                    <span>Employees</span>
-                                                            </div>
+                                                          </div>
                                                     </div>
                                             </div>
                                     </div>
                  </div>
         </div>
 </div>
-
 {% endblock %}
