@@ -1,0 +1,17 @@
+{% load static %}
+
+<html>
+    <body>
+        <h2>Leave Querier</h2>
+        <div>
+            <input type="date" id="start_date">
+            <input type="date" id="end_date">
+            <button id="ajax_leave_query">Query Button</button>
+        </div>
+        <script type="text/javascript">
+            window.CSRF_TOKEN = "{{ csrf_token }}";
+        </script>
+        <script src="{% static 'dashboard/js/jquery-3.2.1.min.js' %}"></script>
+        <script src="{% static 'dashboard/js/leave.js' %}"></script>
+    </body>
+</html>

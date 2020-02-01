@@ -11,6 +11,7 @@ urlpatterns = [
     path('dashboard',views.dashboard, name = 'dashboard'),
     path('chat',views.chat, name = 'chat'),
     path('events',views.events, name = 'events'),
+    path('leave_query', views.leave_query, name = 'leave_query'),
     path('upload_file',views.upload_file, name = 'upload_file'),
     path('file_manager',views.file_manager, name = 'file_manager'),
     path('employees',views.employees, name = 'employees'),

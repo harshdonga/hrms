@@ -117,11 +117,16 @@ def file_manager(request):
     else:
         return redirect('home')
 
+def leave_query(request):
+    print('req came here')
+    return redirect('events')
 
 
-
-
-
+def events(request):
+    if request.session.has_key('emp_id') and request.session.has_key('username'):
+        return render(request, 'dashboard/events.html')
+    else:
+        return redirect('home')
 
 
 
@@ -129,9 +134,6 @@ def file_manager(request):
 
 
 def chat(request):
-    return render(request, 'dashboard/page_under_development.html')
-
-def events(request):
     return render(request, 'dashboard/page_under_development.html')
 
 def employees(request):
