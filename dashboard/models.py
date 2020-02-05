@@ -29,6 +29,8 @@ class EmployeeProfessional(models.Model):
     position = models.CharField(max_length=50, blank=True, null=True)
     emp_email = models.CharField(max_length=75, blank=True, null=True)
     files = JSONField()
+    projects = JSONField()
+    total_leaves = models.SmallIntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -42,6 +44,7 @@ class Leave(models.Model):
     number_of_days = models.SmallIntegerField(blank=True, null=True)
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
+    department = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
         managed = False

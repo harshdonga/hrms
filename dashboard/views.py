@@ -1,12 +1,12 @@
 import json
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.decorators import login_required
 from ipaddr import client_ip
-from .models import Timesheet, EmployeePersonal, EmployeeProfessional, Login
+from .models import Timesheet, EmployeePersonal, EmployeeProfessional, Login, Leave
 
 def get_employee(request):
     emp_id = request.session['emp_id']
@@ -118,7 +118,35 @@ def file_manager(request):
         return redirect('home')
 
 def leave_query(request):
-    print('req came here')
+    if request.method == 'POST':
+        start_date_string = request.POST['start_date']
+        end_date_string = request.POST['end_date']
+        start_date = date(*map(int, start_date_string.split('-')))
+        end_date = date(*map(int, end_date_string.split('-')))
+        tot_days = str(end_date - start_date).split(',')[0]
+        no_of_days = int(tot_days.split()[0])
+
+
+        employee = get_employee(request)
+        try:
+            leaves = Leave.objects.filter(department = employee.department)
+            leave_list = list(leaves)
+            for x in leave_list:
+                if x.emp_id == employee.emp_id and x.start_date < start_date < x.end_date:
+                    print("Already you on leave")    ###########  UI  ###########
+                    return redirect('events')
+            
+            #### clashing w others ####
+
+            if employee.total_leaves > no_of_days:
+                employee.total_leaves = employee.total_leaves - no_of_days
+                l = Leave(emp_id = employee.emp_id, number_of_days = no_of_days, start_date = start_date, end_date = end_date)
+                l.save()
+                employee.save()
+        except:
+            print("No leave records fetched")
+        # l = Leave(emp_id = employee.emp_id, number_of_days = no_of_days, start_date = start_date, end_date = end_date)
+        # l.save()
     return redirect('events')
 
 

@@ -24,8 +24,8 @@ class EmployeeProfessionalAdmin(admin.ModelAdmin):
 
 @admin.register(Leave)
 class LeaveAdmin(admin.ModelAdmin):
-    list_display = ('leave_id', 'emp_id', 'name', 'number_of_days', 'start_date')
-    ordering = ('start_date',) 
+    list_display = ('leave_id', 'emp_id', 'name', 'number_of_days', 'department','start_date')
+    ordering = ('start_date','department') 
     formfield_overrides = {
         JSONField: {'widget': JSONEditorWidget},
     }

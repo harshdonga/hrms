@@ -128,9 +128,6 @@ class EmployeePersonal(models.Model):
     links = models.TextField(blank=True, null=True)  # This field type is a guess.
     emp_email = models.CharField(max_length=75, blank=True, null=True)
 
-    def __str__(self):
-        return emp_id
-
     class Meta:
         managed = False
         db_table = 'employee_personal'
@@ -148,9 +145,7 @@ class EmployeeProfessional(models.Model):
     position = models.CharField(max_length=50, blank=True, null=True)
     emp_email = models.CharField(max_length=75, blank=True, null=True)
     files = models.TextField(blank=True, null=True)  # This field type is a guess.
-
-    def __str__(self):
-        return emp_id
+    projects = models.TextField(blank=True, null=True)  # This field type is a guess.
 
     class Meta:
         managed = False
@@ -164,9 +159,7 @@ class Leave(models.Model):
     number_of_days = models.SmallIntegerField(blank=True, null=True)
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
-
-    def __str__(self):
-        return emp_id
+    department = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -194,9 +187,6 @@ class PayInfo(models.Model):
     gross_pay = models.SmallIntegerField(blank=True, null=True)
     net_pay = models.SmallIntegerField(blank=True, null=True)
 
-    def __str__(self):
-        return emp_id
-
     class Meta:
         managed = False
         db_table = 'pay_info'
@@ -207,9 +197,6 @@ class Timesheet(models.Model):
     emp = models.ForeignKey(EmployeeProfessional, models.DO_NOTHING, blank=True, null=True)
     start_time = models.DateTimeField(blank=True, null=True)
     end_time = models.DateTimeField(blank=True, null=True)
-
-    def __str__(self):
-        return emp_id
 
     class Meta:
         managed = False
