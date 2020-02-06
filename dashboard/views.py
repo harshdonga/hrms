@@ -8,6 +8,8 @@ from django.contrib.auth.decorators import login_required
 from ipaddr import client_ip
 from .models import Timesheet, EmployeePersonal, EmployeeProfessional, Login, Leave
 
+
+###---helpers---###
 def get_employee(request):
     emp_id = request.session['emp_id']
     employee = EmployeeProfessional.objects.get(emp_id = emp_id)
@@ -16,6 +18,8 @@ def get_employee(request):
 def xxx(request):
     ipaddr = client_ip(request)
     return ipaddr
+###---helpers---###
+
 
 def res(request):
     rn = datetime.now()
@@ -118,6 +122,7 @@ def file_manager(request):
         return redirect('home')
 
 def leave_query(request):
+    head_count = 0
     if request.method == 'POST':
         start_date_string = request.POST['start_date']
         end_date_string = request.POST['end_date']
@@ -128,6 +133,12 @@ def leave_query(request):
 
 
         employee = get_employee(request)
+
+        total_employees = len(list(EmployeeProfessional.objects.filter(department = employee.department)))
+        max_leave = int(total_employees/2)
+        print('total employees in dept : ' + str(total_employees))
+        print('max emp to go on leave: ' + str(max_leave))
+
         try:
             leaves = Leave.objects.filter(department = employee.department)
             leave_list = list(leaves)
@@ -136,17 +147,24 @@ def leave_query(request):
                     print("Already you on leave")    ###########  UI  ###########
                     return redirect('events')
             
-            #### clashing w others ####
+            for x in leave_list:
+                if x.emp_id is not employee.emp_id and x.start_date < start_date < x.end_date:
+                    head_count = head_count + 1
+            
+            print('head count of people actually on leave: '+ str(head_count))
+
+            if head_count >= max_leave:
+                print("Can't grant leave, maintain minimum employee limit")
+                return redirect('events')
 
             if employee.total_leaves > no_of_days:
+                print('OK TESTED')
                 employee.total_leaves = employee.total_leaves - no_of_days
                 l = Leave(emp_id = employee.emp_id, number_of_days = no_of_days, start_date = start_date, end_date = end_date)
                 l.save()
                 employee.save()
         except:
             print("No leave records fetched")
-        # l = Leave(emp_id = employee.emp_id, number_of_days = no_of_days, start_date = start_date, end_date = end_date)
-        # l.save()
     return redirect('events')
 
 
