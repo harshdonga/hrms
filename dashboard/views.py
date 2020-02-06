@@ -1,5 +1,6 @@
 import json
 from datetime import datetime, timedelta, date
+from calendar import monthrange
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -10,6 +11,7 @@ from .models import Timesheet, EmployeePersonal, EmployeeProfessional, Login, Le
 
 
 ###---helpers---###
+
 def get_employee(request):
     emp_id = request.session['emp_id']
     employee = EmployeeProfessional.objects.get(emp_id = emp_id)
@@ -18,6 +20,7 @@ def get_employee(request):
 def xxx(request):
     ipaddr = client_ip(request)
     return ipaddr
+
 ###---helpers---###
 
 
@@ -154,6 +157,7 @@ def leave_query(request):
             print('head count of people actually on leave: '+ str(head_count))
 
             if head_count >= max_leave:
+                check_for_later()
                 print("Can't grant leave, maintain minimum employee limit")
                 return redirect('events')
 
@@ -164,7 +168,7 @@ def leave_query(request):
                 l.save()
                 employee.save()
         except:
-            print("No leave records fetched")
+            print("Can't Fetch Right now, try later!")
     return redirect('events')
 
 
