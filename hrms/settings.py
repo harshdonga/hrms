@@ -10,6 +10,7 @@ ALLOWED_HOSTS = ['*']
 
 
 INSTALLED_APPS = [
+    'django_private_chat',
     'django_json_widget',
     'dashboard',
     'django.contrib.admin',
@@ -31,6 +32,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'hrms.urls'
+
+CHAT_WS_SERVER_HOST = 'localhost'
+CHAT_WS_SERVER_PORT = 5002
+CHAT_WS_SERVER_PROTOCOL = 'ws'
 
 TEMPLATES = [
     {

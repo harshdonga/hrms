@@ -29,7 +29,6 @@ def res(request):
     emp_id = request.session['emp_id']
     obj = Timesheet(emp_id = emp_id, start_time = rn)
     obj.save()
-    print(obj.timesheet_id)
     request.session['timesheet_id'] = obj.timesheet_id
     data = {}
     data['result'] = 'Request made for time in'
@@ -56,6 +55,7 @@ def login(request):
     session = request.session
     emp_email = request.POST['email']
     emp_pass = request.POST['password']
+    IP = ['127.0.0.1']  #IP's here
     try:
         employee = EmployeeProfessional.objects.get(emp_email= emp_email)
         print('user exists')
@@ -63,9 +63,17 @@ def login(request):
             print('Password Matched!')
             name = employee.name['first'] + " " + employee.name['last']
             session['emp_id'] = employee.emp_id
-            session['username'] = name 
-            return redirect('dashboard')
-            
+            session['username'] = name
+            emp_id = employee.emp_id
+            ipaddr = xxx(request)
+            last_login = datetime.now()
+            if str(ipaddr) not in IP:
+                return redirect('logout')
+            else:
+                l = Login(ip_addr=ipaddr, last_login=last_login, emp_id = emp_id)
+                l.save()
+                print("saved login info") 
+                return redirect('dashboard')
         else:
             print('Sorry, Wrong Password')
             return redirect('home')
@@ -76,8 +84,9 @@ def login(request):
 
 def logout(request):
     session = request.session
-    del session['emp_id']
-    del session['username']
+    if request.session.has_key('emp_id') and request.session.has_key('username'):
+        del session['emp_id']
+        del session['username']
     return redirect('home')
 
 
@@ -157,12 +166,12 @@ def leave_query(request):
             print('head count of people actually on leave: '+ str(head_count))
 
             if head_count >= max_leave:
-                check_for_later()
+                # check_for_later()
                 print("Can't grant leave, maintain minimum employee limit")
                 return redirect('events')
 
-            if employee.total_leaves > no_of_days:
-                print('OK TESTED')
+            if employee.total_leaves >= no_of_days:
+                print('Leave Granted')
                 employee.total_leaves = employee.total_leaves - no_of_days
                 l = Leave(emp_id = employee.emp_id, number_of_days = no_of_days, start_date = start_date, end_date = end_date)
                 l.save()
@@ -179,14 +188,15 @@ def events(request):
         return redirect('home')
 
 
-
+def employees(request):
+    employees = EmployeeProfessional.objects.all()
+    leaves = Leave.objects.filter(start_date__lte=date.today(),end_date__gte=date.today())
+    leave_list = [i.emp_id for i in leaves]
+    return render(request, 'dashboard/employees.html', {'employees': employees, 'leave_list':leave_list})
 
 
 
 def chat(request):
-    return render(request, 'dashboard/page_under_development.html')
-
-def employees(request):
     return render(request, 'dashboard/page_under_development.html')
 
 def holidays(request):
