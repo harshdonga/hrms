@@ -1,4 +1,5 @@
 import json
+import smtplib
 from datetime import datetime, timedelta, date
 from calendar import monthrange
 from django.shortcuts import render, redirect
@@ -194,6 +195,42 @@ def employees(request):
     leave_list = [i.emp_id for i in leaves]
     return render(request, 'dashboard/employees.html', {'employees': employees, 'leave_list':leave_list})
 
+
+def profile(request, id):
+    if request.session.has_key('emp_id') and request.session.has_key('username'):
+        professional = EmployeeProfessional.objects.get(emp_id = id)
+        personal = EmployeePersonal.objects.get(emp_id = id)
+        return render(request, 'dashboard/profile.html', {'professional':professional, 'personal':personal})
+    else:
+        return redirect('home')    
+
+def mail(request):
+    if request.session.has_key('emp_id') and request.session.has_key('username'):
+        return render(request, 'dashboard/mail.html')
+    else:
+        return redirect('home')    
+
+def send_mail(request):
+    try:
+        to = request.POST['to']
+        subject = request.POST['subject']
+        message = request.POST['message']
+    except:
+        print('Did not parse')
+    email = get_employee(request).emp_email
+    print(email)
+    message = subject + message
+    try:
+        smtpobj = smtplib.SMTP('smtp.gmail.com', 587)
+        smtpobj.ehlo()
+        smtpobj.starttls()
+        smtpobj.ehlo()
+        smtpobj.login(email, '')
+        smtpobj.sendmail(email, to, message)
+        smtpobj.quit()
+    except:
+        print('Mail sending error')
+    return redirect('email')
 
 
 def chat(request):

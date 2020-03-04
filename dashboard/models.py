@@ -11,6 +11,7 @@ class EmployeePersonal(models.Model):
     education = JSONField()
     links = JSONField()
     emp_email = models.CharField(max_length=75, blank=True, null=True)
+    profile_photo = models.CharField(max_length=200, blank=True, null=True)
 
     class Meta:
         managed = False

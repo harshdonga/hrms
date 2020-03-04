@@ -31,19 +31,19 @@
             {% for i in employees %}
                 {% if i.emp_id in leave_list %}
                     <tr class="red">
-                    <td>{{ i.emp_id }}</td>
-                    <td>{{ i.name.first }}</td>
-                    <td>{{ i.name.last }}</td>
-                    <td>{{ i.department }}</td>
-                    <td>{{ i.position }}</td>
-                    </tr>
+                        <td><a href="{% url 'profile' id=i.emp_id %}">{{ i.emp_id }}</a></td>
+                        <td><a href="">{{ i.name.first }}</a></td>
+                        <td>{{ i.name.last }}</td>
+                        <td><a href="">{{ i.department }}</a></td>
+                        <td><a href="">{{ i.position }}</a></td>
+                        </tr>
                 {% else %}
                     <tr>
-                        <td>{{ i.emp_id }}</td>
-                        <td>{{ i.name.first }}</td>
+                        <td><a href="{% url 'profile' id=i.emp_id %}">{{ i.emp_id }}</a></td>
+                        <td><a href="">{{ i.name.first }}</a></td>
                         <td>{{ i.name.last }}</td>
-                        <td>{{ i.department }}</td>
-                        <td>{{ i.position }}</td>
+                        <td><a href="">{{ i.department }}</a></td>
+                        <td><a href="">{{ i.position }}</a></td>
                     </tr>
                 {% endif %}
 

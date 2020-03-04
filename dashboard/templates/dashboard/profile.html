@@ -1,0 +1,32 @@
+<img style="float:right;margin-left:20px; height: 20em; width: 30em;" src="{{ personal.profile_photo }}">
+<h1>{{ professional.name.first }} {{ professional.name.last }}</h1>
+<h4>{{ professional.position }} -  {{ professional.department }}</h4>
+<h4>Date of joining : {{ professional.date_of_joining }}</h4>
+
+
+<p><strong>Personal Details</strong><br>
+    Contact number : {{ personal.contact_no }}<br>
+    Email Address : {{ personal.emp_email }}<br>
+    LinkedIn : <a href="{{personal.links.linkedin}}">{{professional.name.first}}</a>
+</p>
+<br>
+<p><strong>Latest Activities</strong>
+    {% if professional.activity %}
+        {% for i in professional.activity %}
+            <h5>i.activity_name</h5>
+            <p>i.activity_desc</p>
+        {% endfor %}
+    {% else %}
+        <p>Nothing to show currently</p>
+    {% endif %}
+</p>
+
+<p><strong>Employee Relation</strong><br>
+    {% if professional.parent %}
+        {{ professional.parent }}
+    {% endif %}<br>
+    {{ professional.name.first }} {{ professional.name.last}}
+    {% if professional.child %}
+        {{ professional.child }}
+    {% endif %}<br>
+</p>

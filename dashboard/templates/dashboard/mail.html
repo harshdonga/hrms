@@ -1,0 +1,14 @@
+<h2>Mail System</h2>
+<form action="{% url 'send_mail' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label>
+        To : <input name="to" type="text">
+    </label><br>
+    <label>
+        Subject : <input name="subject" type="text"> 
+    </label><br><br>
+    <label for="message">
+        Message : <textarea id="message" name="message"></textarea>
+    </label><br><br>
+    <input type="submit">   
+</form>
