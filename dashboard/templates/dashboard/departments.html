@@ -1,0 +1,10 @@
+<html>
+    <body>
+        {% for i,j in depts.items %}
+            <h2><strong>{{ i }}</strong></h2>
+            {% for val in j %}
+                <p><a href="{% url 'profile' id=val.emp_id %}">{{ val.name.first }} {{ val.name.last }}</a></p>
+            {% endfor %}
+        {% endfor %}
+    </body>
+</html>

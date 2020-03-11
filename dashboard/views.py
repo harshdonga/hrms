@@ -1,5 +1,6 @@
 import json
 import smtplib
+from django.db.models import Count
 from datetime import datetime, timedelta, date
 from calendar import monthrange
 from django.shortcuts import render, redirect
@@ -232,6 +233,31 @@ def send_mail(request):
         print('Mail sending error')
     return redirect('email')
 
+def departments(request):
+    if request.session.has_key('emp_id') and request.session.has_key('username'):
+        distinct = EmployeeProfessional.objects.all()
+        depts= {}
+        for i in distinct:
+            if i.department not in depts:
+                depts[i.department] = []
+                depts[i.department].append(i)
+            else:
+                depts[i.department].append(i)
+        print(depts)
+        return render(request, 'dashboard/departments.html', {'depts' : depts})
+    else:
+        return redirect('home')    
+
+def projects(request):
+    if request.session.has_key('emp_id') and request.session.has_key('username'):
+        p = EmployeeProfessional.objects.values('projects')
+        emp = EmployeeProfessional.objects.exclude(projects__isnull = True)
+        print(p)
+        return render(request, 'dashboard/page_under_development.html')
+    else:
+        return redirect('home')    
+
+
 
 def chat(request):
     return render(request, 'dashboard/page_under_development.html')
@@ -245,8 +271,6 @@ def leaves(request):
 def attendance(request):
     return render(request, 'dashboard/page_under_development.html')
 
-def departments(request):
-    return render(request, 'dashboard/page_under_development.html')
 
 def designations(request):
     return render(request, 'dashboard/page_under_development.html')
@@ -260,8 +284,6 @@ def overtime(request):
 def clients(request):
     return render(request, 'dashboard/page_under_development.html')
 
-def projects(request):
-    return render(request, 'dashboard/page_under_development.html')
 
 def tasks(request):
     return render(request, 'dashboard/page_under_development.html')
