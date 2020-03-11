@@ -252,8 +252,13 @@ def projects(request):
     if request.session.has_key('emp_id') and request.session.has_key('username'):
         p = EmployeeProfessional.objects.values('projects')
         emp = EmployeeProfessional.objects.exclude(projects__isnull = True)
-        print(p)
-        return render(request, 'dashboard/page_under_development.html')
+        proj_name = set()
+        for i in p:
+            if i['projects'] is not None:
+                for j in i['projects'].values():
+                    for k in j:
+                       proj_name.add(k['project_name'])
+        return render(request, 'dashboard/projects.html', {'proj_name':proj_name, 'emp':emp})
     else:
         return redirect('home')    
 
@@ -271,6 +276,8 @@ def leaves(request):
 def attendance(request):
     return render(request, 'dashboard/page_under_development.html')
 
+def calendar(request):
+    return render(request, 'dashboard/page_under_development.html')
 
 def designations(request):
     return render(request, 'dashboard/page_under_development.html')

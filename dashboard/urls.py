@@ -20,6 +20,7 @@ urlpatterns = [
     path('send_mail', views.send_mail, name = 'send_mail'),
     path('holidays',views.holidays, name = 'holidays'),
     path('leaves',views.leaves, name = 'leaves'),
+    path('calendar', views.calendar, name = 'calendar'),
     path('attendance',views.attendance, name = 'attendance'),
     path('departments',views.departments, name = 'departments'),
     path('designations',views.designations, name = 'designations'),
